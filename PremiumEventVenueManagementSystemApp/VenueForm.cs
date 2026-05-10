@@ -8,7 +8,7 @@ namespace PremiumEventVenueManagementSystemApp
     public partial class VenueForm : Form
     {
         public VenueForm()
-        {
+        { 
             InitializeComponent();
             UiTheme.StyleCrudButton(btnInsert, UiTheme.InsertColor);
             UiTheme.StyleCrudButton(btnUpdate, UiTheme.UpdateColor);
@@ -83,11 +83,17 @@ namespace PremiumEventVenueManagementSystemApp
             if (e.RowIndex < 0)
                 return;
             var row = dgvVenues.Rows[e.RowIndex];
+
             txtVenueID.Text = row.Cells["VenueID"].Value?.ToString() ?? "";
+
             txtVenueName.Text = row.Cells["VenueName"].Value?.ToString() ?? "";
+
             txtCity.Text = row.Cells["City"].Value?.ToString() ?? "";
+
             txtArea.Text = row.Cells["Area"].Value?.ToString() ?? "";
+
             txtStreet.Text = row.Cells["Street"].Value?.ToString() ?? "";
+
             if (row.Cells["MaxSeatingCapacity"].Value != DBNull.Value)
                 numCapacity.Value = Convert.ToDecimal(row.Cells["MaxSeatingCapacity"].Value);
             else

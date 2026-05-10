@@ -42,7 +42,7 @@ namespace PremiumEventVenueManagementSystemApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Gatherings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Gatherings");
             }
         }
 
@@ -94,14 +94,18 @@ WHERE g.Title LIKE '%' + @s + '%' OR g.Category LIKE '%' + @s + '%'";
             if (e.RowIndex < 0)
                 return;
             var row = dgvGatherings.Rows[e.RowIndex];
+
             txtGatheringID.Text = row.Cells["GatheringID"].Value?.ToString() ?? "";
+
             if (row.Cells["VenueID"].Value != DBNull.Value)
                 cmbVenue.SelectedValue = Convert.ToInt32(row.Cells["VenueID"].Value);
+
             txtTitle.Text = row.Cells["Title"].Value?.ToString() ?? "";
             txtCategory.Text = row.Cells["Category"].Value?.ToString() ?? "";
 
             if (row.Cells["StartTime"].Value != DBNull.Value)
                 dtpStart.Value = Convert.ToDateTime(row.Cells["StartTime"].Value);
+
             if (row.Cells["EndTime"].Value != DBNull.Value)
                 dtpEnd.Value = Convert.ToDateTime(row.Cells["EndTime"].Value);
 
@@ -149,13 +153,13 @@ VALUES (@vid, @t, @c, @start, @end, @stat)";
                     new SqlParameter("@end", dtpEnd.Value),
                     new SqlParameter("@stat", cmbStatus.SelectedItem?.ToString() ?? "Scheduled"));
 
-                MessageBox.Show("Gathering created.", "Gatherings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Gathering created.", "Gatherings");
                 BtnLoadGatheringsCore();
                 btnClear_Click(null, EventArgs.Empty);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Gatherings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Gatherings");
             }
         }
 
@@ -163,7 +167,7 @@ VALUES (@vid, @t, @c, @start, @end, @stat)";
         {
             if (!int.TryParse(txtGatheringID.Text, out var gid))
             {
-                MessageBox.Show("Select a gathering.", "Gatherings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Select a gathering.", "Gatherings");
                 return;
             }
             if (!ValidateGathering())
@@ -183,12 +187,12 @@ EndTime=@end, Status=@stat WHERE GatheringID=@gid";
                     new SqlParameter("@end", dtpEnd.Value),
                     new SqlParameter("@stat", cmbStatus.SelectedItem?.ToString() ?? "Scheduled"));
 
-                MessageBox.Show("Gathering updated.", "Gatherings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Gathering updated.", "Gatherings");
                 BtnLoadGatheringsCore();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Gatherings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Gatherings");
             }
         }
 

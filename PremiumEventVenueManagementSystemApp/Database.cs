@@ -12,14 +12,12 @@ namespace PremiumEventVenueManagementSystemApp
                 Initial Catalog=PremiumEventVenueManagementSystem;
                 Integrated Security=True");
 
-        /// <summary>
-        /// Matches PremiumEventVenueManagementSystem.sql (composite PK: PATRONID, PASSID, CATEGORYID).
-        /// </summary>
-        internal const string PurchaseTableQualified = "[dbo].[PURCHASE]";
 
+        internal const string PurchaseTableQualified = "[dbo].[PURCHASE]";
         internal const string EntryPassTableQualified = "[dbo].[ENTRYPASS]";
 
-        /// <summary>Runs SELECT that returns scalar; connection opened/closed per call.</summary>
+
+     
         public static object ExecuteScalar(string sql, params SqlParameter[] parameters)
         {
             using (var cmd = new SqlCommand(sql, con))
@@ -74,7 +72,6 @@ namespace PremiumEventVenueManagementSystemApp
             }
         }
 
-        /// <summary>Fill using open connection implicitly via adapter.Fill (opens if needed).</summary>
         public static void FillDataTable(DataTable dt, string sql, params SqlParameter[] parameters)
         {
             using (var cmd = new SqlCommand(sql, con))

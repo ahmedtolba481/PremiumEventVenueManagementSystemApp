@@ -1,4 +1,4 @@
-﻿namespace PremiumEventVenueManagementSystemApp
+namespace PremiumEventVenueManagementSystemApp
 {
     partial class TechnicalStaffForm
     {

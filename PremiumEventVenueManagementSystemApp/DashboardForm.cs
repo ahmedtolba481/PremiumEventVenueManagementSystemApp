@@ -7,13 +7,16 @@ namespace PremiumEventVenueManagementSystemApp
 {
     public partial class DashboardForm : Form
     {
+        private MainForm mainForm;
+
         public Action<Type> Navigate { get; set; }
 
         private readonly Color _cardBase = Color.MidnightBlue;
         private readonly Color _cardHover = Color.FromArgb(50, 60, 150);
 
-        public DashboardForm()
+        public DashboardForm(MainForm form)
         {
+            mainForm = form;
             InitializeComponent();
             AttachCards();
             UiTheme.ApplyListStyle(lstActivity);
@@ -46,7 +49,7 @@ namespace PremiumEventVenueManagementSystemApp
                         pnl.BackColor = _cardBase;
                 };
 
-                EventHandler go = (_, __) => Navigate?.Invoke(formType);
+                EventHandler go = (_, __) => mainForm.OpenForm(Activator.CreateInstance(formType) as Form);
 
                 c.Cursor = Cursors.Hand;
                 c.MouseEnter += hoverIn;
@@ -62,46 +65,23 @@ namespace PremiumEventVenueManagementSystemApp
                 lblPatronCount.Text = Database.ExecuteScalar("SELECT COUNT(*) FROM PATRON")?.ToString() ?? "0";
                 lblGatheringCount.Text = Database.ExecuteScalar("SELECT COUNT(*) FROM GATHERING")?.ToString() ?? "0";
                 lblVenueCount.Text = Database.ExecuteScalar("SELECT COUNT(*) FROM VENUE")?.ToString() ?? "0";
-                lblTicketCount.Text = Database.ExecuteScalar("SELECT COUNT(*) FROM ENTRYPASS")?.ToString() ?? "0";
+                lblTicketCount.Text = Database.ExecuteScalar("SELECT COUNT(*) FROM Purchase")?.ToString() ?? "0"; 
                 lblStaffCount.Text = Database.ExecuteScalar("SELECT COUNT(*) FROM TECHNICALSTAFF")?.ToString() ?? "0";
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Unable to load dashboard statistics:{Environment.NewLine}{ex.Message}",
-                    "Dashboard", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                lblPatronCount.Text =
-                    lblGatheringCount.Text =
-                        lblVenueCount.Text =
-                            lblTicketCount.Text =
-                                lblStaffCount.Text = "—";
+                lblPatronCount.Text = "—";
+                lblGatheringCount.Text = "—";
+                lblVenueCount.Text = "—";
+                lblTicketCount.Text = "—";
+                lblStaffCount.Text = "—";
             }
         }
 
         private void LoadActivities()
         {
-            lstActivity.Items.Clear();
-            try
-            {
-                var sql =
-                    @"SELECT TOP 15 msg FROM (
-    SELECT CAST(N'Purchase P' + CAST(PATRONID AS NVARCHAR(20)) + N' Pass ' + CAST(PASSID AS NVARCHAR(20)) + N' Cat ' + CAST(CATEGORYID AS NVARCHAR(20)) + N' • ' + CONVERT(NVARCHAR(19), PURCHASEDATE, 120) AS NVARCHAR(500)) AS msg, PURCHASEDATE AS dt
-      FROM " + Database.PurchaseTableQualified + @"
-    UNION ALL
-    SELECT CAST(N'Gathering #' + CAST(GatheringID AS NVARCHAR(20)) + N' • ' + ISNULL(Title, N'') AS NVARCHAR(500)), StartTime FROM GATHERING
-) AS u
-ORDER BY dt DESC";
-
-                var dt = Database.FillDataTable(sql);
-                foreach (DataRow row in dt.Rows)
-                    lstActivity.Items.Add(row["msg"]?.ToString() ?? "");
-
-                if (lstActivity.Items.Count == 0)
-                    AddFallbackActivity();
-            }
-            catch
-            {
                 AddFallbackActivity();
-            }
+            
         }
 
         private void AddFallbackActivity()
@@ -164,47 +144,47 @@ ORDER BY dt DESC";
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(PatronForm));
+            mainForm.OpenForm(new PatronForm());
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(GatheringForm));
+            mainForm.OpenForm(new GatheringForm());
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(PurchaseForm));
+            mainForm.OpenForm(new PurchaseForm());
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(ReportsForm));
+            mainForm.OpenForm(new ReportsForm());
         }
 
         private void pnlPatrons_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(PatronForm));
+            mainForm.OpenForm(new PatronForm());
         }
 
         private void pnlGatherings_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(GatheringForm));
+            mainForm.OpenForm(new GatheringForm());
         }
 
         private void pnlVenue_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(VenueForm));
+            mainForm.OpenForm(new VenueForm());
         }
 
         private void pnlTickets_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(TicketCategoryForm));
+            mainForm.OpenForm(new TicketCategoryForm());
         }
 
         private void pnlStaff_Click(object sender, EventArgs e)
         {
-            Navigate?.Invoke(typeof(TechnicalStaffForm));
+            mainForm.OpenForm(new TechnicalStaffForm());
         }
 
         private void label1_Click(object sender, EventArgs e) { }

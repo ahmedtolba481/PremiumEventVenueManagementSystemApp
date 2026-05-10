@@ -313,9 +313,9 @@
             this.label11.ForeColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(61, 103);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(121, 25);
+            this.label11.Size = new System.Drawing.Size(150, 25);
             this.label11.TabIndex = 2;
-            this.label11.Text = "Entry Passes";
+            this.label11.Text = "Ticket purchase";
             this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // lblTicketCount
@@ -375,7 +375,7 @@
             this.grpQuick.Controls.Add(this.button2);
             this.grpQuick.Controls.Add(this.button1);
             this.grpQuick.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.grpQuick.Location = new System.Drawing.Point(1143, 400);
+            this.grpQuick.Location = new System.Drawing.Point(1249, 400);
             this.grpQuick.Name = "grpQuick";
             this.grpQuick.Size = new System.Drawing.Size(520, 280);
             this.grpQuick.TabIndex = 7;

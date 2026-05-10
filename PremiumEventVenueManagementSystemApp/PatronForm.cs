@@ -82,14 +82,22 @@ WHERE FirstName LIKE '%' + @s + '%' OR LastName LIKE '%' + @s + '%' OR Email LIK
             if (e.RowIndex < 0)
                 return;
             var row = dgvPatrons.Rows[e.RowIndex];
+
             txtPatronID.Text = row.Cells["PatronID"].Value?.ToString() ?? "";
+
             txtFirst.Text = row.Cells["FirstName"].Value?.ToString() ?? "";
+
             txtLast.Text = row.Cells["LastName"].Value?.ToString() ?? "";
+
             txtEmail.Text = row.Cells["Email"].Value?.ToString() ?? "";
-            if (row.Cells["RegistrationDate"].Value != DBNull.Value &&
-                DateTime.TryParse(row.Cells["RegistrationDate"].Value?.ToString(), CultureInfo.InvariantCulture,
-                    DateTimeStyles.AssumeLocal, out var reg))
-                dtpRegistration.Value = reg;
+
+            if (row.Cells["RegistrationDate"].Value != DBNull.Value)
+            {
+                dtpRegistration.Value =
+                    Convert.ToDateTime(
+                        row.Cells["RegistrationDate"].Value
+                    );
+            }
             LoadPhonesForPatron();
         }
 

@@ -23,6 +23,8 @@ namespace PremiumEventVenueManagementSystemApp
             this.btnClose = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.pnlSidebar = new System.Windows.Forms.Panel();
+            this.btnEntryPass = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnVenue = new System.Windows.Forms.Button();
             this.btnTicket = new System.Windows.Forms.Button();
             this.btnGathering = new System.Windows.Forms.Button();
@@ -32,13 +34,11 @@ namespace PremiumEventVenueManagementSystemApp
             this.btnPatron = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pnlTop.SuspendLayout();
             this.pnlWindowButtons.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
-            this.pnlMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlTop
@@ -118,6 +118,7 @@ namespace PremiumEventVenueManagementSystemApp
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(41)))), ((int)(((byte)(55)))));
+            this.pnlSidebar.Controls.Add(this.btnEntryPass);
             this.pnlSidebar.Controls.Add(this.button1);
             this.pnlSidebar.Controls.Add(this.btnVenue);
             this.pnlSidebar.Controls.Add(this.btnTicket);
@@ -131,8 +132,25 @@ namespace PremiumEventVenueManagementSystemApp
             this.pnlSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlSidebar.Location = new System.Drawing.Point(0, 80);
             this.pnlSidebar.Name = "pnlSidebar";
-            this.pnlSidebar.Size = new System.Drawing.Size(227, 803);
+            this.pnlSidebar.Size = new System.Drawing.Size(227, 825);
             this.pnlSidebar.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(7, 639);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(210, 52);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "Reports";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_3);
+            this.button1.MouseEnter += new System.EventHandler(this.SidebarBtn_MouseEnter);
+            this.button1.MouseLeave += new System.EventHandler(this.SidebarBtn_MouseLeave);
             // 
             // btnVenue
             // 
@@ -202,6 +220,23 @@ namespace PremiumEventVenueManagementSystemApp
             this.btnStaff.MouseEnter += new System.EventHandler(this.SidebarBtn_MouseEnter);
             this.btnStaff.MouseLeave += new System.EventHandler(this.SidebarBtn_MouseLeave);
             // 
+            // btnEntryPass
+            // 
+            this.btnEntryPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
+            this.btnEntryPass.FlatAppearance.BorderSize = 0;
+            this.btnEntryPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEntryPass.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnEntryPass.ForeColor = System.Drawing.Color.White;
+            this.btnEntryPass.Location = new System.Drawing.Point(7, 715);
+            this.btnEntryPass.Name = "btnEntryPass";
+            this.btnEntryPass.Size = new System.Drawing.Size(210, 52);
+            this.btnEntryPass.TabIndex = 17;
+            this.btnEntryPass.Text = "Entry Passes";
+            this.btnEntryPass.UseVisualStyleBackColor = false;
+            this.btnEntryPass.Click += new System.EventHandler(this.btnEntryPass_Click);
+            this.btnEntryPass.MouseEnter += new System.EventHandler(this.SidebarBtn_MouseEnter);
+            this.btnEntryPass.MouseLeave += new System.EventHandler(this.SidebarBtn_MouseLeave);
+            // 
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
@@ -209,7 +244,7 @@ namespace PremiumEventVenueManagementSystemApp
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(7, 715);
+            this.btnExit.Location = new System.Drawing.Point(7, 790);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(210, 52);
             this.btnExit.TabIndex = 11;
@@ -282,37 +317,21 @@ namespace PremiumEventVenueManagementSystemApp
             this.label1.TabIndex = 0;
             this.label1.Text = "EVENT SYSTEM";
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(7, 639);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(210, 52);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "Reports";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click_3);
-            this.button1.MouseEnter += new System.EventHandler(this.SidebarBtn_MouseEnter);
-            this.button1.MouseLeave += new System.EventHandler(this.SidebarBtn_MouseLeave);
-            // 
             // pnlMain
             // 
             this.pnlMain.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(227, 80);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1214, 781);
+            this.pnlMain.Size = new System.Drawing.Size(1214, 803);
             this.pnlMain.TabIndex = 2;
+            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMain_Paint);
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 883);
+            this.statusStrip1.Location = new System.Drawing.Point(227, 883);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1441, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1214, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "Ready";
             // 
@@ -337,7 +356,6 @@ namespace PremiumEventVenueManagementSystemApp
             this.pnlWindowButtons.ResumeLayout(false);
             this.pnlSidebar.ResumeLayout(false);
             this.pnlSidebar.PerformLayout();
-            this.pnlMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,5 +381,6 @@ namespace PremiumEventVenueManagementSystemApp
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnEntryPass;
     }
 }

@@ -8,11 +8,6 @@ namespace PremiumEventVenueManagementSystemApp
 {
     public partial class PurchaseForm : Form
     {
-        private static string Pur(string alias = null) =>
-            string.IsNullOrEmpty(alias)
-                ? Database.PurchaseTableQualified
-                : Database.PurchaseTableQualified + " " + alias;
-
         private int? _keyPatronId;
         private int? _keyPassId;
         private int? _keyCategoryId;
@@ -92,7 +87,7 @@ FROM Patron ORDER BY PatronID");
                 {
                     MessageBox.Show(
                         "Could not load entry passes from " + Database.EntryPassTableQualified +
-                        Environment.NewLine + ex.Message,
+                        ex.Message,
                         "Purchases", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     cmbPass.DataSource = null;
                     return;
@@ -129,7 +124,7 @@ FROM Patron ORDER BY PatronID");
             return @"SELECT pur.PATRONID AS PatronID, pur.PASSID AS PassID, pur.CATEGORYID AS CategoryID,
  pur.PURCHASEDATE AS PurchaseDate, pur.PAYMENTMETHOD AS PaymentMethod,
  p.FirstName + N' '+p.LastName AS PatronName, tc.CategoryName AS CategoryName
-FROM " + Pur("pur") + @"
+FROM " + Database.PurchaseTableQualified + @" pur
 INNER JOIN Patron p ON p.PatronID = pur.PATRONID
 LEFT JOIN TicketCategory tc ON tc.CategoryID = pur.CATEGORYID ";
         }
@@ -198,13 +193,16 @@ ORDER BY pur.PURCHASEDATE DESC";
             }
             catch
             {
-                /* list rebound */
+               
             }
 
-            if (row.Cells["PurchaseDate"].Value != DBNull.Value &&
-                DateTime.TryParse(row.Cells["PurchaseDate"].Value?.ToString(), CultureInfo.InvariantCulture,
-                    DateTimeStyles.AssumeLocal, out var pd))
-                dtpPurchase.Value = pd;
+       if (row.Cells["PurchaseDate"].Value != DBNull.Value)
+{
+    dtpPurchase.Value =
+        Convert.ToDateTime(
+            row.Cells["PurchaseDate"].Value
+        );
+}
 
             var pay = row.Cells["PaymentMethod"].Value?.ToString() ?? "";
             var ix = cmbPayment.Items.IndexOf(pay);
@@ -245,7 +243,7 @@ ORDER BY pur.PURCHASEDATE DESC";
 
             try
             {
-                var sql = @"INSERT INTO " + Pur() +
+                var sql = @"INSERT INTO " + Database.PurchaseTableQualified +
                           @" (PATRONID, PASSID, CATEGORYID, PURCHASEDATE, PAYMENTMETHOD)
 VALUES (@pid, @pass, @cat, @dt, @pay)";
                 Database.ExecuteNonQuery(sql,
@@ -278,7 +276,7 @@ VALUES (@pid, @pass, @cat, @dt, @pay)";
 
             try
             {
-                var sql = @"UPDATE " + Pur() + @" SET PATRONID=@npid, PASSID=@npass, CATEGORYID=@ncat,
+                var sql = @"UPDATE " + Database.PurchaseTableQualified + @" SET PATRONID=@npid, PASSID=@npass, CATEGORYID=@ncat,
 PURCHASEDATE=@dt, PAYMENTMETHOD=@pay
 WHERE PATRONID=@opid AND PASSID=@opass AND CATEGORYID=@ocat";
                 Database.ExecuteNonQuery(sql,
@@ -320,7 +318,7 @@ WHERE PATRONID=@opid AND PASSID=@opass AND CATEGORYID=@ocat";
             try
             {
                 Database.ExecuteNonQuery(
-                    "DELETE FROM " + Pur() + " WHERE PATRONID=@opid AND PASSID=@opass AND CATEGORYID=@ocat",
+                    "DELETE FROM " + Database.PurchaseTableQualified + " WHERE PATRONID=@opid AND PASSID=@opass AND CATEGORYID=@ocat",
                     new SqlParameter("@opid", _keyPatronId.Value),
                     new SqlParameter("@opass", _keyPassId.Value),
                     new SqlParameter("@ocat", _keyCategoryId.Value));
